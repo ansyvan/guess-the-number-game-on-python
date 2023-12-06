@@ -13,7 +13,7 @@ class GuessNumber:
         self.ask_to_play()
     
     def ask_to_play(self):
-        print("Welcome, {}, to the 'Guess the Number' game. Would you like to play? (Yes/No)".format(self.name))
+        print("Welcome, {}, to the 'Guess the Number' game! Would you like to play? (Yes/No)".format(self.name))
         self.make_choise()
 
     def ask_to_play_again(self):
@@ -37,35 +37,41 @@ class GuessNumber:
 
         # Ask the player to guess 6 times.
         for guesses_taken in range(1, 7):
+
             guesses_left = 7 - guesses_taken
+
             if guesses_left == 6:
-                print("Take a guess! You have {} guesses left.".format(str(guesses_left)))
+                print("Take a guess! You have {} guesses left.".format(guesses_left))
             elif guesses_left != 1:
                 print("Try again! You have {} guesses left.".format(str(guesses_left)))
             else:
                 print("Try again! You have {} guess left.".format(str(guesses_left)))
 
-            guess = input()
-            try:
-                if 0 < int(guess) < 21:
-                    if int(guess) < secret_number:
-                        print("Your number is too low. ")
-                    elif int(guess) > secret_number:
-                        print("Your number is too high. ")
+            while True:
+                guess = input()
+                try:
+                    guess = int(guess)
+                    if 0 < guess < 21:
+                        break
                     else:
-                        break   # This condition is the correct guess!
-                else:
-                    print("Your number should be between 1 and 20.")
-            except ValueError:
-                print("Please, enter an integer number.")
+                        print("Your number should be between 1 and 20.")
+                except:
+                    print("Please, enter an integer number.")
 
-        if guess == secret_number:
+            if int(guess) < secret_number:
+                print("Your number is too low.")
+            elif int(guess) > secret_number:
+                print("Your number is too high.")
+            else:
+                break   # This condition is the correct guess!
+
+        if int(guess) == secret_number:
             if guesses_taken == 1:
                 print("Wow, {}! You made it in the first try!".format(self.name))
             else:
                 print("Good job, {}! You guessed my number in {} guesses!".format(self.name, (str(guesses_taken))))
         else:
-            print("Nope. The number I was thinking of was {}.".format(str(secret_number)))
+            print("No guesses left. The number I was thinking of was {}.".format(str(secret_number)))
         self.ask_to_play_again()
 
 game = GuessNumber()
