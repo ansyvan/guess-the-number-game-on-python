@@ -11,11 +11,8 @@ class GuessNumberGame:
     def __init__(self):
         self.player_name = ""
         self.secret_number = None
-        self.answer_yes_no = None
-        self.guess = None
         self.guesses_left = 0
         self.guesses_taken = 0
-        self.guess_is_valid = False
     
 
     # Beginning with asking the Player's name
@@ -23,24 +20,28 @@ class GuessNumberGame:
         print("Hello there! May I know your name?")
         player_name = input()
         print(f"Welcome, {player_name}, to the 'Guess the Number' game! Would you like to play? (Yes/No)")
-        if self.get_user_yes_no_input() == True:
-            self.play(player_name)
-        else:
+        if self.get_user_yes_no_input():    # Check if the player wants to play
+            while True:     # If the player wants to play, enter a loop for the game
+                self.play(player_name)      # Start the game
+                print("Play again? (Yes/No)")   # After finishing the game, ask if the player wants to play again
+                if not self.get_user_yes_no_input():    # Check if the player wants to play again
+                    break       # If "No", exit the loop. If "Yes," the loop continues.
             self.exit_game()
 
 
     # Answering any Yes/No questions
     def get_user_yes_no_input(self):
-        self.answer_yes_no = input().lower()
-        if self.answer_yes_no == "yes":
-            return True
-        elif self.answer_yes_no == "no":
-            print("I feel sorry to hear that. Hope to see you again soon.")
-        else:
-            print("Please type either 'Yes' or 'No'")
+        while True:
+            answer_yes_no = input().lower()
+            if answer_yes_no == "yes":
+                return True
+            elif answer_yes_no == "no":
+                print("I feel sorry to hear that. Hope to see you again soon.")
+                return False
+            else:
+                print("Please type either 'Yes' or 'No'")
 
         
-
     def generate_secret_number(self):
         self.secret_number = random.randint(self.MIN_NUMBER, self.MAX_NUMBER)
         return self.secret_number
@@ -62,11 +63,13 @@ class GuessNumberGame:
     
 
     def read_user_guess(self):
+        guess = None
         guess_is_valid = False
         while not guess_is_valid:
             guess = input()
             guess_is_valid = self.validate_user_input(guess)
         return int(guess)
+        
         
     # Validate the input data is integer from MIN to MAX number
     def validate_user_input(self, guess):
@@ -119,9 +122,6 @@ class GuessNumberGame:
 
         self.game_result(player_name, guess, secret_number, guesses_taken)
 
-    def ask_to_play_again(self):
-        print("Play again? (Yes/No)")
-        self.get_user_yes_no_input()
 
     def exit_game(self):
         sys.exit()
