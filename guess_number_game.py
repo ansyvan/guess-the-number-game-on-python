@@ -124,7 +124,10 @@ class GuessNumberGame:
 
 
     def exit_game(self):
-        sys.exit()
+        try:
+            sys.exit()
+        except SystemExit:
+            pass
 
 game = GuessNumberGame()
 game.run()
