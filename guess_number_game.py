@@ -1,19 +1,24 @@
-# This is a guess the number game
-
 import random
 import sys
 
-class GuessNumberGame:
+class NumberRandomizer:
     MIN_NUMBER = 1
     MAX_NUMBER = 20
+
+    @staticmethod
+    def generate_random_number():
+        return random.randint(NumberRandomizer.MIN_NUMBER, NumberRandomizer.MAX_NUMBER)
+
+class GuessNumberGame:
     MAX_GUESSES = 5
 
-    def __init__(self):
+    def __init__(self, randomizer):
         self.player_name = ""
         self.secret_number = None
         self.guesses_left = 0
         self.guesses_taken = 0
-    
+        self.randomizer = randomizer
+
 
     # Beginning with asking the Player's name
     def run(self):
@@ -42,9 +47,9 @@ class GuessNumberGame:
                 print("Please type either 'Yes' or 'No'")
 
         
-    def generate_secret_number(self):
-        self.secret_number = random.randint(self.MIN_NUMBER, self.MAX_NUMBER)
-        return self.secret_number
+    # def generate_secret_number(self):
+    #     self.secret_number = self.randomizer.generate_random_number()
+    #     return self.secret_number
 
 
     # Display appropriate message on remaining guesses.
@@ -75,10 +80,10 @@ class GuessNumberGame:
     def validate_user_input(self, guess):
         try:
             guess = int(guess)
-            if self.MIN_NUMBER <= guess <= self.MAX_NUMBER:
+            if NumberRandomizer.MIN_NUMBER <= guess <= NumberRandomizer.MAX_NUMBER:
                 return True    # Return the validated guess
             else:
-                print(f"Your number should be between {self.MIN_NUMBER} and {self.MAX_NUMBER}.")
+                print(f"Your number should be between {NumberRandomizer.MIN_NUMBER} and {NumberRandomizer.MAX_NUMBER}.")
         except ValueError:
             print("Please, enter an integer number.")
 
@@ -107,8 +112,8 @@ class GuessNumberGame:
 
         
     def play(self, player_name):
-        print(f"Well, {player_name}, I am thinking of a number between {self.MIN_NUMBER} and {self.MAX_NUMBER}.")
-        secret_number = self.generate_secret_number()
+        print(f"Well, {player_name}, I am thinking of a number between {NumberRandomizer.MIN_NUMBER} and {NumberRandomizer.MAX_NUMBER}.")
+        secret_number = self.randomizer.generate_random_number()
         guess = 0
         for guesses_taken in range (1, self.MAX_GUESSES + 1):
             guesses_left = self.calculate_guesses_left(guesses_taken)
@@ -124,10 +129,9 @@ class GuessNumberGame:
 
 
     def exit_game(self):
-        try:
             sys.exit()
-        except SystemExit:
-            pass
 
-game = GuessNumberGame()
-game.run()
+if __name__ == "__main__":
+    randomizer = NumberRandomizer()
+    game = GuessNumberGame(randomizer)
+    game.run()
