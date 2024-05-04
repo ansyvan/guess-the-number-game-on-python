@@ -1,4 +1,4 @@
-# guess_the_number_game_on_python
+# guess-the-number-game-on-python
 
 [Guess the Number Game](https://github.com/ansyvan/python_projects/blob/main/guess_number_game.py)
 
