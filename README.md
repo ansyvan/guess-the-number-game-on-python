@@ -1,6 +1,6 @@
-# python_projects
+# guess_the_number_game_on_python
 
-1. [Guess the Number Game](https://github.com/ansyvan/python_projects/blob/main/guess_number_game.py)
+[Guess the Number Game](https://github.com/ansyvan/python_projects/blob/main/guess_number_game.py)
 
 This is a simple Python-based "Guess the Number" game designed to run in the console. The game generates a random number between a specified range, and the player has a limited number of attempts to guess the correct number.
 
